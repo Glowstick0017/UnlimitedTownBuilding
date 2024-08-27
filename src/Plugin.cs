@@ -15,7 +15,7 @@ namespace UnlimitedTownBuilding
     {
         public const string GUID = "Glowstick.UnlimitedTownBuilding";
         public const string NAME = "UnlimitedTownBuilding";
-        public const string VERSION = "1.0.0";
+        public const string VERSION = "1.1.0";
 
         internal static ManualLogSource Log;
 
@@ -75,6 +75,39 @@ namespace UnlimitedTownBuilding
             static void Prefix(Building __instance)
             {
                 __instance.BuildingType = Building.BuildingTypes.House;
+            }
+        }
+        
+        // Remove contruction costs
+        [HarmonyPatch(typeof(BuildingResourcesManager), "GetResourceValue")]
+        public class BuildingResourcesManager_GetResourceValue
+        {
+            static void Prefix(BuildingResourcesManager __instance)
+            {
+                __instance.m_resources[0].Value = 99999;
+                __instance.m_resources[1].Value = 99999;
+                __instance.m_resources[2].Value = 99999;
+                __instance.m_resources[3].Value = 99999;
+            }
+        }
+        
+        // remove housing requirements
+        [HarmonyPatch(typeof(BuildingResourcesManager), "HousingValue", MethodType.Getter)]
+        public class BuildingResourcesManager_HousingValue
+        {
+            static void Prefix(BuildingResourcesManager __instance)
+            {
+                __instance.m_housingValue = 999;
+            }
+        }
+        
+        // do not destroy buildings after 7 days
+        [HarmonyPatch(typeof(AreaManager), "IsAreaExpired")]
+        public class AreaManager_IsAreaExpired
+        {
+            static void Postfix(ref bool __result)
+            {
+                __result = false;
             }
         }
 

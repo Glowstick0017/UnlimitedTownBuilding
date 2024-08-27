@@ -15,7 +15,7 @@ namespace UnlimitedTownBuilding
     {
         public const string GUID = "Glowstick.UnlimitedTownBuilding";
         public const string NAME = "UnlimitedTownBuilding";
-        public const string VERSION = "1.1.0";
+        public const string VERSION = "1.1.2";
 
         internal static ManualLogSource Log;
 
@@ -108,6 +108,16 @@ namespace UnlimitedTownBuilding
             static void Postfix(ref bool __result)
             {
                 __result = false;
+            }
+        }
+        
+        // construction time is finishes in 1 day
+        [HarmonyPatch(typeof(Building), "StartConstructionTimer")]
+        public class Building_StartConstructionTimer
+        {
+            static void Postfix(Building __instance)
+            {
+                __instance.m_remainingConstructionTime = 1;
             }
         }
 

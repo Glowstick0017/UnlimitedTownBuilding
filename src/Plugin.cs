@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using MapMagic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace UnlimitedTownBuilding
 {
@@ -18,6 +20,8 @@ namespace UnlimitedTownBuilding
         public const string VERSION = "1.1.2";
 
         internal static ManualLogSource Log;
+        
+        public static Building buildingToDestroy { get; private set; }
 
         internal void Awake()
         {
@@ -25,6 +29,18 @@ namespace UnlimitedTownBuilding
             Log.LogMessage($"Hello world from {NAME} {VERSION}!");
 
             new Harmony(GUID).PatchAll();
+        }
+
+        internal void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+                {
+                    DestroyUnityObject(hit);
+                }
+            }
         }
 
         // Allow unlimited buildings
@@ -120,6 +136,42 @@ namespace UnlimitedTownBuilding
                 __instance.m_remainingConstructionTime = 1;
             }
         }
+        
+        // destroy unity object of the closest building to the raycast hit
+        public static void DestroyUnityObject(RaycastHit hit)
+        {
+            Building[] buildings = Resources.FindObjectsOfTypeAll<Building>();
+            Building closestBuilding = null;
+            float closestDistance = float.MaxValue;
+            foreach (Building building in buildings)
+            {
+                float distance = Vector3.Distance(building.transform.position, hit.point);
+                if (distance < closestDistance)
+                {
+                    closestBuilding = building;
+                    closestDistance = distance;
+                }
+            }
+            if (closestBuilding != null)
+            {
+                buildingToDestroy = closestBuilding;
+                
+                CharacterManager characterManager = CharacterManager.Instance;
+                Character character = characterManager.GetFirstLocalCharacter();
+                CharacterUI characterUI = character.CharacterUI;
+                if (characterUI != null)
+                {
+                    characterUI.MessagePanel.Show("Destroy building " + closestBuilding.DisplayName + "?", "Confirm", DestroyBuilding, null);
+                }
+            }
+        }
 
+        private static void DestroyBuilding()
+        {
+            Log.LogMessage($"Destroying building {buildingToDestroy.name}");
+            BuildingResourcesManager.Instance.UnregisterBuiding(buildingToDestroy);
+            ItemManager.Instance.SendDestroyItem(buildingToDestroy.UID);
+            Destroy(buildingToDestroy.gameObject);
+        }
     }
 }

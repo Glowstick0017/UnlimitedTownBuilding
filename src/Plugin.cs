@@ -17,7 +17,7 @@ namespace UnlimitedTownBuilding
     {
         public const string GUID = "Glowstick.UnlimitedTownBuilding";
         public const string NAME = "UnlimitedTownBuilding";
-        public const string VERSION = "1.1.2";
+        public const string VERSION = "1.1.3";
 
         internal static ManualLogSource Log;
         

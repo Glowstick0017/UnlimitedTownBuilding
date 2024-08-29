@@ -2,10 +2,9 @@
   "namespace": "Glowstick",
   "name": "UnlimitedTownBuilding",
   "description": "Build towns anywhere!",
-  "version_number": "1.1.3",
+  "version_number": "1.2.0",
   "dependencies": [
-    "BepInEx-BepInExPack_Outward-5.4.19",
-    "sinai-dev-SideLoader-3.8.4"
+    "BepInEx-BepInExPack_Outward-5.4.19"
   ],
   "website_url": "https://github.com/Glowstick0017/UnlimitedTownBuilding"
 }

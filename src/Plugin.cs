@@ -140,6 +140,11 @@ namespace UnlimitedTownBuilding
             static void Prefix(BuildingResourcesManager __instance)
             {
                 __instance.m_housingValue = 999;
+                __instance.m_specializedBuildingCount = 15;
+                __instance.m_activeSpecializedBuildingCount = 15;
+                __instance.m_fullyUpgradedSpecializedBuildingCount = 15;
+                __instance.m_resourceProducingBuildingCount = 15;
+                __instance.m_activeResourceProducingBuildingCount = 15;
             }
         }
         

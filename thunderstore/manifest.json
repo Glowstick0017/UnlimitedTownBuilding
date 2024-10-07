@@ -2,7 +2,7 @@
   "namespace": "Glowstick",
   "name": "UnlimitedTownBuilding",
   "description": "Build towns anywhere!",
-  "version_number": "1.2.1",
+  "version_number": "1.2.2",
   "dependencies": [
     "BepInEx-BepInExPack_Outward-5.4.19"
   ],

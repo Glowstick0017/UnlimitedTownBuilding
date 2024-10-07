@@ -206,7 +206,7 @@ namespace UnlimitedTownBuilding
             foreach (Building building in buildings)
             {
                 float distance = Vector3.Distance(building.transform.position, hit.point);
-                if (distance < closestDistance)
+                if (distance < closestDistance && distance < 30)
                 {
                     closestBuilding = building;
                     closestDistance = distance;

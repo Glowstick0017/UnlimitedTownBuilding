@@ -17,7 +17,7 @@ namespace UnlimitedTownBuilding
     {
         public const string GUID = "Glowstick.UnlimitedTownBuilding";
         public const string NAME = "UnlimitedTownBuilding";
-        public const string VERSION = "1.3.0";
+        public const string VERSION = "1.3.1";
 
         internal static ManualLogSource Log;
 
@@ -40,7 +40,7 @@ namespace UnlimitedTownBuilding
             destroyKey = Config.Bind("General", "Destroy Key", KeyCode.Delete, "Keybind to remove buildings.");
             bypassDestroyConfirmation = Config.Bind("General", "Bypass Destroy Confirmation", false, "Bypass the confirmation dialog when destroying buildings.");
             instantConstruction = Config.Bind("General", "Instant Construction", false, "Buildings construct and upgrade instantly.");
-            buildOutsideNewSirocco = Config.Bind("General", "Build Outside New Sirocco", true, "Allow building outside New Sirocco and prevent buildings from expiring.");
+            buildOutsideNewSirocco = Config.Bind("General", "Build Outside New Sirocco", false, "Allow building outside New Sirocco and prevent buildings from expiring.");
             
             new Harmony(GUID).PatchAll();
         }

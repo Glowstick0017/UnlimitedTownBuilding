@@ -17,7 +17,7 @@ namespace UnlimitedTownBuilding
     {
         public const string GUID = "Glowstick.UnlimitedTownBuilding";
         public const string NAME = "UnlimitedTownBuilding";
-        public const string VERSION = "1.2.0";
+        public const string VERSION = "1.3.0";
 
         internal static ManualLogSource Log;
 
@@ -26,6 +26,7 @@ namespace UnlimitedTownBuilding
         public static ConfigEntry<KeyCode> destroyKey;
         public static ConfigEntry<bool> bypassDestroyConfirmation;
         public static ConfigEntry<bool> instantConstruction;
+        public static ConfigEntry<bool> buildOutsideNewSirocco;
         
         public static Building buildingToDestroy { get; private set; }
 
@@ -39,6 +40,7 @@ namespace UnlimitedTownBuilding
             destroyKey = Config.Bind("General", "Destroy Key", KeyCode.Delete, "Keybind to remove buildings.");
             bypassDestroyConfirmation = Config.Bind("General", "Bypass Destroy Confirmation", false, "Bypass the confirmation dialog when destroying buildings.");
             instantConstruction = Config.Bind("General", "Instant Construction", false, "Buildings construct and upgrade instantly.");
+            buildOutsideNewSirocco = Config.Bind("General", "Build Outside New Sirocco", true, "Allow building outside New Sirocco and prevent buildings from expiring.");
             
             new Harmony(GUID).PatchAll();
         }
@@ -98,7 +100,10 @@ namespace UnlimitedTownBuilding
         {
             static void Prefix(BuildingResourcesManager __instance)
             {
-                __instance.m_canBaseBuildInCurrentScene = true;
+                if (buildOutsideNewSirocco.Value)
+                {
+                    __instance.m_canBaseBuildInCurrentScene = true;
+                }
             }
         }
         
@@ -154,7 +159,10 @@ namespace UnlimitedTownBuilding
         {
             static void Postfix(ref bool __result)
             {
-                __result = false;
+                if (buildOutsideNewSirocco.Value)
+                {
+                    __result = false;
+                }
             }
         }
         

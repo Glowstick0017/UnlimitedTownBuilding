@@ -23,6 +23,7 @@ These are the following options you can change:
 - **Destroy Key**: The key to press to destroy buildings, you will not receive any resources back. Default is Delete Key.
 - **Bypass Destroy Confirmation**: If true, you will not be asked to confirm the destruction of a building. Default is false.
 - **Instant Construction**: If true, construction on buildings and upgrades will be instant. Default is false.
+- **Build Outside New Sirocco**: If true, allows you to place buildings anywhere outside of New Sirocco. Default is true. **WARNING**: Enabling this will prevent areas from expiring every 7 days, which means enemies will not respawn/despawn and some aspects of the game might break.
 
 ## Building flags
 
